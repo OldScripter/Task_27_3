@@ -5,10 +5,13 @@
 
 class TeamMember : public Employee {
 
-public:
-    TeamMember(int id, std::string name, std::string surname, Employee* manager);
-    void work() override;
-};
+private:
+    TaskType taskType {NO_TASK};
 
+public:
+    TeamMember();
+    void work(int taskType) override;
+    TaskType getTaskType();
+};
 
 #endif //TASK_27_3_TEAMMEMBER_H

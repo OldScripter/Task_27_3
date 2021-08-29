@@ -1,17 +1,38 @@
 #include "../include/TopManager.h"
 
-TopManager::TopManager(int id, std::string name, std::string surname)
-{
-    this->id = id;
-    this->name = std::move(name);
-    this->surname = std::move(surname);
+ TopManager::TopManager()
+ {
     this->position = TOP_MANAGER;
-    this->manager = nullptr;
+ }
+
+void TopManager::work(int task)
+{
+    if (teamManagers.empty())
+    {
+        std::cout << "\t- Top manager #" << this->id << ": No managers in my team!\n";
+    }
+    else
+    {
+        for (TeamManager* t : teamManagers)
+        {
+            t->work(task);
+        }
+    }
 }
 
-void TopManager::work()
+std::vector<TeamManager*>* TopManager::getTeamManagers()
 {
-    std::cout   << this->getPositionString()
-                << ": " << getId()
-                << "\t - Making work\n";
+    return &teamManagers;
+}
+
+bool TopManager::getIfResourcesAvailable() {
+    for (TeamManager* manager : teamManagers)
+    {
+        for (TeamMember* member : *(manager->getTeamMembers()))
+        {
+            if (member->getTaskType() == NO_TASK)
+                return true;
+        }
+    }
+    return false;
 }

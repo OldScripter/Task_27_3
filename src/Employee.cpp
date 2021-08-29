@@ -1,8 +1,10 @@
 #include "../include/Employee.h"
 
-int Employee::getId() const
+int Employee::Count = 0;
+
+int Employee::getId()
 {
-    return this->id;
+    return id;
 }
 
 void Employee::setId(const int id)
@@ -10,61 +12,49 @@ void Employee::setId(const int id)
     this->id = id;
 }
 
-void Employee::setName(std::string name)
-{
-    this->name = std::move(name);
+Employee::Employee() {
+    ++Count;
+    setId(Count);
 }
 
-void Employee::setSurname(std::string surname)
+int Employee::getIntFromCin(int min, int max)
 {
-    this->surname = std::move(surname);
-}
-
-void Employee::setPosition(const Position position)
-{
-    this->position = position;
-}
-
-std::string Employee::getName() const
-{
-    return this->name;
-}
-
-std::string Employee::getSurname() const
-{
-    return this->surname;
-}
-
-Position Employee::getPosition() const
-{
-    return position;
-}
-
-std::string Employee::getPositionString() const
-{
-    switch (position)
+    std::string buffer;
+    std::getline(std::cin, buffer);
+    int result = 0;
+    try
     {
-        case TOP_MANAGER:
-            return "TOP MANAGER";
-        case TEAM_MANAGER:
-            return "TEAM MANAGER";
-        case TEAM_MEMBER:
-            return "TEAM MEMBER";
+        result = std::stoi(buffer);
+        if (result < min || result > max)
+        {
+            result = 0;
+            throw -1;
+        }
+    }
+    catch(int)
+    {
+        std::cerr << "Wrong number (not between " << min << " and " << max << ")!\n";
+    }
+    catch(...)
+    {
+        std::cerr << "Error while getting integer from input!\n";
+    }
+    return result;
+}
+
+std::string Employee::getTaskTypeString(TaskType taskType)
+{
+    switch (taskType)
+    {
+        case TASK_A:
+            return "A";
+        case TASK_B:
+            return "B";
+        case TASK_C:
+            return "C";
+        case NO_TASK:
+            return "[no task]";
         default:
-            return "NOT SET";
+            return "[not defined]";
     }
-}
-
-Employee *Employee::getManager() const
-{
-    return this->manager;
-}
-
-void Employee::setManager(Employee *manager)
-{
-    if (manager != nullptr)
-    {
-        this->manager = manager;
-    }
-
 }

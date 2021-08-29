@@ -4,6 +4,14 @@
 #include <vector>
 #include <iostream>
 
+enum TaskType
+{
+    TASK_A = 0,
+    TASK_B = 1,
+    TASK_C = 2,
+    NO_TASK = 99
+};
+
 enum Position
 {
     TOP_MANAGER,
@@ -13,33 +21,32 @@ enum Position
 
 class Employee {
 
+    static int Count;
+
 protected:
-
     int id;
-    std::string name;
-    std::string surname;
     Position position;
-    Employee* manager {nullptr};
-
-    Employee(){};
+    Employee();
 
 public:
-    int getId() const;
-    std::string getName() const;
-    std::string getSurname() const;
-    Position getPosition() const;
-    std::string getPositionString() const;
-    Employee* getManager() const;
-
+    int getId() ;
     void setId(const int id);
-    void setName(std::string name);
-    void setSurname(std::string surname);
-    void setPosition(const Position position);
+    virtual void work(int task) = 0;
 
-    virtual void setManager(Employee* manager);
-    virtual void work() = 0;
+    /**
+     * @method Get integer value between min and max from cin.
+     * @param [in] min int
+     * @param [in] max int
+     * @return int result
+     */
+    static int getIntFromCin(int min, int max);
 
+    /**
+     * @method Returns string name of task type.
+     * @param [in] taskType
+     * @return std::string
+     */
+    static std::string getTaskTypeString(TaskType taskType);
 };
-
 
 #endif //TASK_27_3_EMPLOYEE_H

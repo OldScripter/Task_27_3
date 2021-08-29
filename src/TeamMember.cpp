@@ -1,17 +1,16 @@
 #include "../include/TeamMember.h"
 
-TeamMember::TeamMember(int id, std::string name, std::string surname, Employee* manager)
+TeamMember::TeamMember()
 {
-    this->id = id;
-    this->name = std::move(name);
-    this->surname = std::move(surname);
     this->position = TEAM_MEMBER;
-    this->manager = manager;
 }
 
-void TeamMember::work()
+void TeamMember::work(int taskType)
 {
-    std::cout   << this->getPositionString()
-                << ": " << getId()
-                << "\t - Making work\n";
+    this->taskType = TaskType (taskType);
+    std::cout << "\t\t\t- Team member #" << this->id << ": I've received task type - " << getTaskTypeString(this->taskType) << "\n";
+}
+
+TaskType TeamMember::getTaskType() {
+    return this->taskType;
 }
